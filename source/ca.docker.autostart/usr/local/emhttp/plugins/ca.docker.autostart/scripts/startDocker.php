@@ -35,6 +35,9 @@ foreach ($managed as $container) {
     logger("$containerName no longer installed.  Skipping autostart");
     continue;
   }
+  if ( ! is_numeric($containerDelay) ) {
+    $containerDelay = 0;
+  }
   logger("$containerDelay seconds sleep before starting $containerName");
   sleep($containerDelay);
   logger("Starting $containerName");

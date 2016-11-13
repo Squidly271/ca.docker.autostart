@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.docker.autostart">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2016.11.13a">
-<!ENTITY md5       "562877230141dd673f9ddd927ce019fa">
+<!ENTITY version   "2016.11.13">
+<!ENTITY md5       "6073456e38770e3a5144d4cfae566bc1">
 <!ENTITY launch    "Settings/Docker.autostart">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.docker.autostart">
