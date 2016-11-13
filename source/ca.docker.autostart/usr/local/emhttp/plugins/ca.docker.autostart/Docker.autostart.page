@@ -1,0 +1,195 @@
+Menu="CA"
+Title="Docker Autostart Manager"
+Icon="ca.docker.autostart.png"
+---
+<?PHP
+###############################################################
+#                                                             #
+# Community Applications copyright 2015-2016, Andrew Zawadzki #
+#                                                             #
+###############################################################
+
+require_once("/usr/local/emhttp/plugins/ca.docker.autostart/include/caCredits.php");
+
+$plugin = "ca.docker.autostart";
+$dockerRunning = is_dir("/var/lib/docker/tmp") ? "true" : "false";
+
+$installedVersion = exec("/usr/local/emhttp/plugins/dynamix.plugin.manager/scripts/plugin version /var/log/plugins/ca.docker.autostart.plg");
+if ( is_file("/tmp/plugins/ca.cleanup.appdata.plg") ) {
+  $upgradeVersion = exec("/usr/local/emhttp/plugins/dynamix.plugin.manager/scripts/plugin version /tmp/plugins/ca.docker.autostart.plg");
+} else {
+  $upgradeVersion = "0";
+}
+if ( $installedVersion < $upgradeVersion ) {
+  $upgradeAvailable = "true";
+}
+
+?>
+<script>
+var URL = "/plugins/ca.docker.autostart/include/exec.php";
+
+function disableArrow(arrow) {
+  $("#"+arrow).css("color","grey");
+  $("#"+arrow).css("cursor","auto");
+  $("#"+arrow).removeClass("select");
+}
+function enableArrow(arrow) {
+  $("#"+arrow).css("color","green");
+  $("#"+arrow).css("cursor","pointer");
+  $("#"+arrow).addClass("select");
+}
+
+function enableApply() {
+  $("#myapply").prop("disabled",false);
+}
+
+function move(direction) {
+  var action = "move" + direction;
+  if ( ! $("#"+direction).hasClass("select") ) {
+    return;
+  }
+  var container = $(".selectedContainer").attr("id");
+  $.post(URL,{action:action,container:container}, function(data) {
+    if (data) {
+      $("#script").html(data);
+      selectContainer(container);
+      enableApply();
+    }
+  });
+}
+
+function changeDelay(container) {
+  var delayID = "#"+container+"Delay";
+  var containerDelay = $(delayID).val();
+
+  $.post(URL,{action:'changeDelay',container:container,containerDelay:containerDelay},function(data) {
+    if (data) {
+      if (data == " ") {
+        data = "";
+      }
+      $(delayID).val(data);
+      enableApply();
+    }
+  });
+}
+
+function selectContainer(containerLine) {
+  var containerID = "#" + containerLine;
+  $(".container").css("background-color","");
+  $(".container").removeClass("selectedContainer");
+  $(containerID).css("background-color","aqua");
+  $(containerID).addClass("selectedContainer");
+  $(".arrow").css("color","grey");
+  $(".arrow").css("cursor","auto");
+  if ( $(containerID).hasClass("unraid") ) {
+    enableArrow("right");
+    disableArrow("left");
+    disableArrow("up");
+    disableArrow("down");
+  } else {
+    enableArrow("left");
+    disableArrow("right");
+    enableArrow("up");
+    enableArrow("down");
+  }
+}
+
+function myApply() {
+  $("#myapply").prop("disabled",true);
+  
+  var autostart = new Array();
+  
+  $(".autostart").each(function() {
+    var checked = $(this).is(':checked');
+    var id = $(this).attr("id");
+    var newAutostart = new Array(id,checked);
+    autostart.push(newAutostart);
+  });
+    
+  $.post(URL,{action:'apply',autostart:autostart},function(data) {
+    if (data) {
+      $("#test").html(data);
+      swal({
+        title: "Changes Applied",
+        text:  "On the next stop / start of the docker applications, the selected applications will start with the appropriate delays",
+        showCancelButton: false,
+        showConfirmButton: true,
+        closeOnConfirm: true
+      });
+    }
+  });
+}
+
+function showCredits() {
+  myAlert("CA Cleanup Appdata","<?=$caCredits?>","/plugins/<?=$plugin?>/images/ca.docker.autostart.png","96x96", true, false, true);
+}
+
+function myAlert(description,textdescription,textimage,imagesize, outsideClick, showCancel, showConfirm, alertType) {
+  if ( !outsideClick ) outsideClick = false;
+  if ( !showCancel )   showCancel = false;
+  if ( !showConfirm )  showConfirm = false;
+  if ( imagesize == "" ) { imagesize = "80x80"; }
+  swal({
+    title: description,
+    text: textdescription,
+    imageUrl: textimage,
+    imageSize: imagesize,
+    allowOutsideClick: outsideClick,
+    showConfirmButton: showConfirm,
+    showCancelButton: showCancel,
+    type: alertType,
+    html: true
+  });
+}
+
+$(function(){
+  if ( "<?=$dockerRunning?>" == "false" ) {
+    swal({
+      title: "Docker Not Running",
+      text:  "Docker must be running for this plugin to operate correctly",
+      type: "error"
+    });
+    return;
+  }
+  if ( "<?=$upgradeAvailable?>" == "true" ) {
+    $("#upgradeAvailable").show();
+  }
+  $(".arrows").removeClass("select");
+  $(".arrows").css("color","grey");
+  $(".arrows").css("cursor","auto");
+
+  $.post(URL,{action:'initialize'},function(data) {
+    if (data) {
+      $("#script").html(data);
+    }
+  });
+});
+
+</script>
+<div id='upgradeAvailable' style='display:none'><center> <font color='red'>An update to CA Docker Autostart Manager is Available. Click <a href='/Plugins'>HERE</a> to install the update</center></font></div>
+
+> CA Docker Autostart Manager will allow you to select the order in which the various docker applications are started.
+> Any of the apps on the left pane will be started automatically by unRaid with no regard for startup order.<br>
+> Apps on the right pane will be started in the order specified, and with a selectable delay prior to starting (after the previous app has been started)
+
+<div style='width:40%; float:left;'><center><font size='4'>Managed by unRaid</font></center></div>
+<div style='width:10%; float:left;'>&nbsp;</div>
+<div style='width:45%; float:left;'><center><font size='4'>Managed by CA Docker Autostart Manager</font></center></div>
+<br>
+<div id='available' style='width:40%; height: 350px; float:left; overflow:scroll;'>Docker Not Running</div>
+<div style='width:10%; height: 350px; float:left;'>
+<center><br><br><br>
+<i id='right' class='arrows fa fa-arrow-circle-right fa-5x' style='color:green' onclick='move(&quot;right&quot;);'></i><br>
+<i id='left' class='arrows fa fa-arrow-circle-right fa-5x fa-rotate-180' style='color:green' onclick='move(&quot;left&quot;);'></i><br>
+<i id='up' class='arrows fa fa-arrow-circle-right fa-5x fa-rotate-270' style='color:green' onclick='move(&quot;up&quot;);'></i><br>
+<i id='down' class='arrows fa fa-arrow-circle-right fa-5x fa-rotate-90' style='color:green' onclick='move(&quot;down&quot;);'></i>
+</div>
+<div id='managed' style='width:45%; height: 350px; float:left; overflow:scroll;'>Docker Not Running</div>
+
+<input type='button' value='Apply' id='myapply' onclick='myApply();' disabled><input type='button' value='Done' onclick='done();'>
+<a style='float:right;cursor:pointer' onclick='showCredits();'>Credits</a><br><br></span>
+<center>For support for this plugin, visit here: <a href="http://lime-technology.com/forum/index.php?topic=40262.0" target="_blank">http://lime-technology.com/forum/index.php?topic=40262.0</a></center>
+<center>Plugin Version: <strong><?=$installedVersion?></strong></center>
+<span id='script'></script>
+
+<span id='test'></script>
