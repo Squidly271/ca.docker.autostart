@@ -1,4 +1,4 @@
-Menu="CA"
+Menu="Docker:4"
 Title="Docker Autostart Manager"
 Icon="ca.docker.autostart.png"
 ---
@@ -121,7 +121,7 @@ function myApply() {
 }
 
 function showCredits() {
-  myAlert("CA Cleanup Appdata","<?=$caCredits?>","/plugins/<?=$plugin?>/images/ca.docker.autostart.png","96x96", true, false, true);
+  myAlert("CA Docker Autostart Manager","<?=$caCredits?>","/plugins/<?=$plugin?>/images/ca.docker.autostart.png","96x96", true, false, true);
 }
 
 function myAlert(description,textdescription,textimage,imagesize, outsideClick, showCancel, showConfirm, alertType) {
@@ -142,6 +142,18 @@ function myAlert(description,textdescription,textimage,imagesize, outsideClick, 
   });
 }
 
+function initialize() {
+  $(".arrows").removeClass("select");
+  $(".arrows").css("color","grey");
+  $(".arrows").css("cursor","auto");
+
+  $.post(URL,{action:'initialize'},function(data) {
+    if (data) {
+      $("#script").html(data);
+    }
+  });
+}
+
 $(function(){
   if ( "<?=$dockerRunning?>" == "false" ) {
     swal({
@@ -154,15 +166,7 @@ $(function(){
   if ( "<?=$upgradeAvailable?>" == "true" ) {
     $("#upgradeAvailable").show();
   }
-  $(".arrows").removeClass("select");
-  $(".arrows").css("color","grey");
-  $(".arrows").css("cursor","auto");
-
-  $.post(URL,{action:'initialize'},function(data) {
-    if (data) {
-      $("#script").html(data);
-    }
-  });
+  initialize();
 });
 
 </script>
@@ -188,7 +192,7 @@ $(function(){
 
 <input type='button' value='Apply' id='myapply' onclick='myApply();' disabled><input type='button' value='Done' onclick='done();'>
 <a style='float:right;cursor:pointer' onclick='showCredits();'>Credits</a><br><br></span>
-<center>For support for this plugin, visit here: <a href="http://lime-technology.com/forum/index.php?topic=40262.0" target="_blank">http://lime-technology.com/forum/index.php?topic=40262.0</a></center>
+<center>For support for this plugin, visit here: <a href="http://lime-technology.com/forum/index.php?topic=53731.0" target="_blank">http://lime-technology.com/forum/index.php?topic=40262.0</a></center>
 <center>Plugin Version: <strong><?=$installedVersion?></strong></center>
 <span id='script'></script>
 
