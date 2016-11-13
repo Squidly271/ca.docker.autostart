@@ -3,7 +3,7 @@
 <!ENTITY name      "ca.docker.autostart">
 <!ENTITY author    "Andrew Zawadzki">
 <!ENTITY version   "2016.11.12">
-<!ENTITY md5       "8758959d9affbfd3c33707e458afd67d">
+<!ENTITY md5       "766a68c50cd9518d967f7743fd9cd184">
 <!ENTITY launch    "Settings/Docker.autostart">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.docker.autostart">
