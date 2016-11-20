@@ -78,7 +78,14 @@ function populate($selectedContainer = false) {
     $available .= "<td width=60px><img src=".$info[$container]['icon']." width=48px; height=48px></td>";
     $available .= "<td><strong>$container</strong></td>";
     $autostart = $info[$container]['autostart'] ? "checked" : "";
-    $available .= "<td>unRaid autostart: <input class='autostart' id='Check$container' type='checkbox' $autostart onchange='enableApply();'></td>";
+    $available .= "<td>";
+    $available .= "<span id='autoText$container'>";
+    $available .= $autostart ? "<font color='red'>Autostart ON</font>" : "Autostart OFF";
+    $available .= "</span>";
+    $available .= "<div class='autostart-switch-button-background' style='width:25px; height:11px;' onclick='changeunRaidAutoStart(this);'>";
+    $class = $autostart ? "unRaidAutoButton" : "";
+    $available .= "<div id='divButton$container' class='autostart-switch-button-button $class' style='width:12px; height:11px;'>";
+    $available .= "</div></div>";
     $available .= "</tr>";
   }
   $available .= "</table>";
@@ -97,7 +104,7 @@ function populate($selectedContainer = false) {
     $plgManage .= "<tr id=$containerName class='container managed $selected' onclick=selectContainer(this.id);>";
     $plgManage .= "<td width=60px><img src=".$info[$containerName]['icon']." width=48px; height=48px></td>";
     $plgManage .= "<td><strong>$containerName</strong></td>";
-    $plgManage .= "<td>Delay: <input id='".$containerName."Delay' type='text' placeholder='Delay In Seconds' class='narrow' $containerDelay onchange=changeDelay('$containerName');></td>";
+    $plgManage .= "<td>Delay: <input id='".$containerName."Delay' type='text' placeholder='Delay In Seconds' style='width:40px' $containerDelay onchange=changeDelay('$containerName');></td>";
     $plgManage .= "</tr>";
   }
   $plgManage .= "</table>";
