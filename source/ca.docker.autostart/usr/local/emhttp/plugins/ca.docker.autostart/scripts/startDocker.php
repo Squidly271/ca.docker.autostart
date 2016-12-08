@@ -44,6 +44,7 @@ foreach ($managed as $container) {
   exec("docker start $containerName");
 }
 logger("CA Docker Autostart Manager Finished");
+exit(0);
 ?>
 
 
