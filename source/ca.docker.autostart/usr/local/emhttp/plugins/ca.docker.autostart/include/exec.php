@@ -117,7 +117,18 @@ switch ($_POST['action']) {
   case "initialize" :
     exec("mkdir -p /tmp/ca.docker.autostart");
     exec("mkdir -p /boot/config/plugins/ca.docker.autostart");
-    writeJsonFile($paths['settingsRAM'],readJsonFile($paths['settings']));
+    $managedContainers = readJsonFile($paths['settings']);
+    if ( ! $managedContainers ) {
+      $managedContainers = array();
+    }
+    $DockerTemplates = new DockerTemplates();
+    $info = $DockerTemplates->getAllInfo();
+    foreach ($managedContainers as $container) {
+      if ( $info[$container['name']] ) {
+        $newManaged[] = $container;
+      }
+    }
+    writeJsonFile($paths['settingsRAM'],$newManaged);
     echo populate();
     break;
     
