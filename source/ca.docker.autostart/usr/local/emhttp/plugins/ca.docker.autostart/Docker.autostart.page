@@ -74,9 +74,11 @@ function move(direction) {
 
 function changeDelay(container) {
   var delayID = "#"+container+"Delay";
+  var portID = "#"+container+"Port";
   var containerDelay = $(delayID).val();
+  var containerPort = $(portID).val();
 
-  $.post(URL,{action:'changeDelay',container:container,containerDelay:containerDelay},function(data) {
+  $.post(URL,{action:'changeDelay',container:container,containerDelay:containerDelay,containerPort:containerPort},function(data) {
     if (data) {
       if (data == " ") {
         data = "";
@@ -188,7 +190,8 @@ $(function(){
 
 > CA Docker Autostart Manager will allow you to select the order in which the various docker applications are started.
 > Any of the apps on the left pane will be started automatically by unRaid with no regard for startup order.<br>
-> Apps on the right pane will be started in the order specified, and with a selectable delay prior to starting (after the previous app has been started)
+> Apps on the right pane will be started in the order specified, and with a selectable delay prior to starting (after the previous app has been started)<br>
+> If you select a listening port for the app, then the app will be started, and then wait for the port to be available before continuing.  If the port is not available within the timeout delay, then the autostart process will carry on to the next app.<br>
 
 <div style='width:40%; float:left;'><center><font size='4'>Managed by unRaid</font></center></div>
 <div style='width:10%; float:left;'>&nbsp;</div>

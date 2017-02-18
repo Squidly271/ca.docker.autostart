@@ -92,11 +92,15 @@ function populate($selectedContainer = false) {
   $plgManage = "<br><table>";
   foreach ($managedContainers as $container) {
     $containerName = $container['name'];
+    $container['delay'] = $container['delay'] ? $container['delay'] : $defaultDelay;
     $containerDelay = "value='".$container['delay']."'";
+/*     $containerDelay = "value='".$container['delay']."'";
+
     if ( ! $containerDelay ) {
       $containerDelay = $defaultDelay;
-    }
-    
+    } */
+    $containerPort = $container['port'] ? "value='".$container['port']."'" : "";
+
     if ( ! $info[$containerName] ) {
       continue;
     }
@@ -104,7 +108,8 @@ function populate($selectedContainer = false) {
     $plgManage .= "<tr id=$containerName class='container managed $selected' onclick=selectContainer(this.id);>";
     $plgManage .= "<td width=60px><img src=".$info[$containerName]['icon']." width=48px; height=48px></td>";
     $plgManage .= "<td><strong>$containerName</strong></td>";
-    $plgManage .= "<td>Delay: <input id='".$containerName."Delay' type='text' placeholder='Delay In Seconds' style='width:40px' $containerDelay onchange=changeDelay('$containerName');></td>";
+    $plgManage .= "<td><strong>Listening Port</strong> <input id='".$containerName."Port' type='text'style='width:40px;' $containerPort onchange=changeDelay('$containerName');></td>";
+    $plgManage .= "<td>Timeout Delay: <input id='".$containerName."Delay' type='text' placeholder='Delay In Seconds' style='width:40px' $containerDelay onchange=changeDelay('$containerName');></td>";
     $plgManage .= "</tr>";
   }
   $plgManage .= "</table>";
@@ -196,6 +201,7 @@ switch ($_POST['action']) {
     $managed = readJsonFile($paths['settingsRAM']);
     $container = trim(getPost("container"));
     $containerDelay = getPost("containerDelay");
+    $containerPort = getPost("containerPort");
     $containerDelay = intval($containerDelay);
     if ( ! $containerDelay ) {
       $containerDelay = 0;
@@ -203,12 +209,16 @@ switch ($_POST['action']) {
     if ( $containerDelay <=0 ) {
       $containerDelay = " ";
     }
+    if ( $containerPort <= 0 ) {
+      $containerPort = "";
+    }
     
     $index = searchArray($managed,"name",$container);
     if ( $index === false) {
       break;
     }
     $managed[$index]['delay'] = $containerDelay;
+    $managed[$index]['port'] = $containerPort;
     writeJsonFile($paths['settingsRAM'],$managed);
     echo $containerDelay;
     break;
