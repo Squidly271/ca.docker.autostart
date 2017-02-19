@@ -52,7 +52,6 @@ foreach ($managed as $container) {
       if ($output) {
         break;
       }
-      logger($time);
       sleep(1);
     }
     if ( ! $output ) {
