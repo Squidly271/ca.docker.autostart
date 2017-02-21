@@ -52,6 +52,8 @@ function resetOrder($list) {
 function populate($selectedContainer = false) {
   global $paths, $defaultDelay;
 
+  $networkINI = parse_ini_file("/usr/local/emhttp/state/network.ini",true);
+  $defaultIP = $networkINI['eth0']['IPADDR:0'];
   $managedContainers = readJsonFile($paths['settingsRAM']);
   if ( ! $managedContainers ) {
     $managedContainers = array();
@@ -94,12 +96,8 @@ function populate($selectedContainer = false) {
     $containerName = $container['name'];
     $container['delay'] = $container['delay'] ? $container['delay'] : $defaultDelay;
     $containerDelay = "value='".$container['delay']."'";
-/*     $containerDelay = "value='".$container['delay']."'";
-
-    if ( ! $containerDelay ) {
-      $containerDelay = $defaultDelay;
-    } */
     $containerPort = $container['port'] ? "value='".$container['port']."'" : "";
+    $containerIP = $container['IP'] ? $container['IP'] : $defaultIP;
 
     if ( ! $info[$containerName] ) {
       continue;
@@ -108,7 +106,8 @@ function populate($selectedContainer = false) {
     $plgManage .= "<tr id=$containerName class='container managed $selected' onclick=selectContainer(this.id);>";
     $plgManage .= "<td width=60px><img src=".$info[$containerName]['icon']." width=48px; height=48px></td>";
     $plgManage .= "<td><strong>$containerName</strong></td>";
-    $plgManage .= "<td><strong>Listening Port</strong> <input id='".$containerName."Port' type='text'style='width:40px;' $containerPort onchange=changeDelay('$containerName');></td>";
+    $plgManage .= "<td><strong>IP</strong><input id='".$containerName."IP' type='text' style='width:80px;' value='$containerIP' onchange=changeDelay('$containerName');>";
+    $plgManage .= "<strong>Port</strong> <input id='".$containerName."Port' placeholder='N/A' type='text' style='width:40px;' $containerPort onchange=changeDelay('$containerName');></td>";
     $plgManage .= "<td>Timeout Delay: <input id='".$containerName."Delay' type='text' placeholder='Delay In Seconds' style='width:40px' $containerDelay onchange=changeDelay('$containerName');></td>";
     $plgManage .= "</tr>";
   }
@@ -202,6 +201,7 @@ switch ($_POST['action']) {
     $container = trim(getPost("container"));
     $containerDelay = getPost("containerDelay");
     $containerPort = getPost("containerPort");
+    $containerIP = getPost("containerIP");
     $containerDelay = intval($containerDelay);
     if ( ! $containerDelay ) {
       $containerDelay = 0;
@@ -219,6 +219,7 @@ switch ($_POST['action']) {
     }
     $managed[$index]['delay'] = $containerDelay;
     $managed[$index]['port'] = $containerPort;
+    $managed[$index]['IP'] = $containerIP;
     writeJsonFile($paths['settingsRAM'],$managed);
     echo $containerDelay;
     break;

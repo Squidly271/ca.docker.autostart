@@ -1,0 +1,2 @@
+-bash: connect: Connection refused
+-bash: /dev/tcp/192.168.1.62/81: Connection refused

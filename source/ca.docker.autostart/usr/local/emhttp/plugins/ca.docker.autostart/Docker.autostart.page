@@ -75,10 +75,12 @@ function move(direction) {
 function changeDelay(container) {
   var delayID = "#"+container+"Delay";
   var portID = "#"+container+"Port";
+  var ipID = "#"+container+"IP";
   var containerDelay = $(delayID).val();
   var containerPort = $(portID).val();
+  var containerIP = $(ipID).val();
 
-  $.post(URL,{action:'changeDelay',container:container,containerDelay:containerDelay,containerPort:containerPort},function(data) {
+  $.post(URL,{action:'changeDelay',container:container,containerDelay:containerDelay,containerPort:containerPort,containerIP:containerIP},function(data) {
     if (data) {
       if (data == " ") {
         data = "";
@@ -195,7 +197,7 @@ $(function(){
 
 <div style='width:40%; float:left;'><center><font size='4'>Managed by unRaid</font></center></div>
 <div style='width:10%; float:left;'>&nbsp;</div>
-<div style='width:45%; float:left;'><center><font size='4'>Managed by CA Docker Autostart Manager</font></center></div>
+<div style='width:45%; float:left;'><center><font size='4'>Managed by CA Docker Autostart Manager</font><br><font size='0'>See Help</font></center></div>
 <br>
 <div id='available' style='width:40%; height: 350px; float:left; overflow:auto;'>Docker Not Running</div>
 <div style='width:10%; height: 350px; float:left;'>

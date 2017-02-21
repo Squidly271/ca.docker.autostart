@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.docker.autostart">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.02.19">
-<!ENTITY md5       "96f6c73fca37c4cc8eba66b23b3918c6">
+<!ENTITY version   "2017.02.21">
+<!ENTITY md5       "ff506a85658b93a8b4a5625c8b94b6f2">
 <!ENTITY launch    "Settings/Docker.autostart">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.docker.autostart">
@@ -13,7 +13,10 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
-###2016.02.18
+###2017.02.21
+- Changed port available criteria to a more accurate one, and add in IP addresses to test
+
+###2017.02.18
 - Added: Option to wait until a port is available from the app before carrying on
 
 ###2016.12.17
@@ -93,6 +96,7 @@ The 'remove' script.
 removepkg &name;-&version;-x86_64-1
 rm -rf &plugdir;
 rm -rf /boot/config/plugins/&name;
+/usr/local/sbin/update_cron
 </INLINE>
 </FILE> 
 </PLUGIN>
