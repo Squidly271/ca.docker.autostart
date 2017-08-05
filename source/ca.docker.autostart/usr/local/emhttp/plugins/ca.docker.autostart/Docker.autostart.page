@@ -204,14 +204,14 @@ $(function(){
 <div style='width:10%; float:left;'>&nbsp;</div>
 <div style='width:45%; float:left;'><center><font size='4'>Managed by CA Docker Autostart Manager</font><br><font size='0'>See Help</font></center></div>
 <br>
-<div id='available' style='width:40%; height: 350px; float:left; overflow:auto;'>Docker Not Running</div>
+<div id='available' style='width:40%; height: 350px; float:left; overflow:auto; border-style:solid; border-color:red; border-width:1px;'>Docker Not Running</div>
 <div style='width:10%; height: 350px; float:left;'><center><br><br><br>
 <i id='right' class='arrows fa fa-arrow-circle-right fa-5x' style='color:green' onclick='move(&quot;right&quot;);'></i><br>
 <i id='left' class='arrows fa fa-arrow-circle-right fa-5x fa-rotate-180' style='color:green' onclick='move(&quot;left&quot;);'></i><br>
 <i id='up' class='arrows fa fa-arrow-circle-right fa-5x fa-rotate-270' style='color:green' onclick='move(&quot;up&quot;);'></i><br>
 <i id='down' class='arrows fa fa-arrow-circle-right fa-5x fa-rotate-90' style='color:green' onclick='move(&quot;down&quot;);'></i>
 </div>
-<div id='managed' style='width:45%; height: 350px; float:left; overflow:auto;'>Docker Not Running</div>
+<div id='managed' style='width:45%; height: 350px; float:left; overflow:auto; border-style:solid; border-color:red; border-width:1px;'>Docker Not Running</div>
 </div>
 
 <span id='script'></script>

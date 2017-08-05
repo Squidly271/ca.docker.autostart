@@ -240,7 +240,9 @@ switch ($_POST['action']) {
       unset($autostart[$index]);
     }
     file_put_contents($paths['autostartFile'],implode("\n",$autostart));
-    
+    if ( ! is_array($unRaidAutostart) ) {
+			$unRaidAutostart = array();
+		}
     unset($autostartFile);
     foreach ($unRaidAutostart as $unRaidContainer) {
       $count = 1;
