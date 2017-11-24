@@ -197,7 +197,7 @@ $(function(){
 
 <input type='button' value='Apply' id='myapply' onclick='myApply();' disabled>
 <a style='float:right;cursor:pointer' onclick='showCredits();'>Credits</a><br><br></span>
-<center>For support for this plugin, visit here: <a href="http://lime-technology.com/forum/index.php?topic=53731.0" target="_blank">http://lime-technology.com/forum/index.php?topic=53731.0</a></center>
+<center>For support for this plugin, visit here: <a href="http://lime-technology.com/forum/index.php?topic=53731.0" target="_blank">HERE</a></center>
 <center>Plugin Version: <strong><?=$installedVersion?></strong></center>
 <div>
 <div style='width:40%; float:left;'><center><font size='4'>Managed by unRaid</font></center></div>

@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.docker.autostart">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.08.05">
-<!ENTITY md5       "9ee0675bf9a01a561c6c22df7f581149">
+<!ENTITY version   "2017.11.23">
+<!ENTITY md5       "68252595cc834df57dd7d9c781aaab28">
 <!ENTITY launch    "Settings/Docker.autostart">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.docker.autostart">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
+###2017.11.23
+- Reorganization as part of updates to CA proper
+
 ###2017.08.05
 - Fixed: Errors if all apps set to be managed start
 
@@ -84,6 +87,7 @@ The 'post-install' script
 <FILE Run="/bin/bash">
 <INLINE>
 mkdir -p /tmp/ca.docker.autostart
+rm -rf /usr/local/emhttp/plugins/ca.docker.autostart/CA.page
 echo ""
 echo "----------------------------------------------------"
 echo " &name; has been installed."
