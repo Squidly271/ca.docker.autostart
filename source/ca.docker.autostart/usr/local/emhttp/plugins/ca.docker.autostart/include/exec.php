@@ -231,7 +231,7 @@ switch ($_POST['action']) {
     }
     writeJsonFile($paths['settings'],$managed);
 
-    $autostart = explode("\n",file_get_contents($paths['autostartFile']));
+    $autostart = explode("\n",@file_get_contents($paths['autostartFile']));
     foreach ($managed as $container) {
       $index = array_search($container['name'],$autostart);
       if ( $index === false ) {

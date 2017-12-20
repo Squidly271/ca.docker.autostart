@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.docker.autostart">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.11.23">
-<!ENTITY md5       "68252595cc834df57dd7d9c781aaab28">
+<!ENTITY version   "2017.12.19">
+<!ENTITY md5       "31b34a3419fc4a56f3eb422cad1f6a98">
 <!ENTITY launch    "Settings/Docker.autostart">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.docker.autostart">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
+###2017.12.19
+- Suppress error if no apps were ever set to autostart
+
 ###2017.11.23
 - Reorganization as part of updates to CA proper
 
