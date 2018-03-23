@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ca.docker.autostart">
 <!ENTITY author    "Andrew Zawadzki">
-<!ENTITY version   "2017.12.19">
-<!ENTITY md5       "31b34a3419fc4a56f3eb422cad1f6a98">
+<!ENTITY version   "2018.03.22">
+<!ENTITY md5       "e0672c2e46add9d250b860cfbafada94">
 <!ENTITY launch    "Settings/Docker.autostart">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "Squidly271/ca.docker.autostart">
@@ -13,6 +13,9 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
+###2018.03.22
+- Fixed: Could not select containers with a period in name
+
 ###2017.12.19
 - Suppress error if no apps were ever set to autostart
 

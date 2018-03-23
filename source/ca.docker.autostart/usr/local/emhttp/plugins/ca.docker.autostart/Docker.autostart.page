@@ -92,13 +92,13 @@ function changeDelay(container) {
 }
 
 function selectContainer(containerLine) {
-  var containerID = "#" + containerLine;
+  var containerID = "#" + containerLine.id;
   $(".container").css("background-color","");
   $(".container").removeClass("selectedContainer");
-  $(containerID).css("background-color","lightcyan");
-  $(containerID).addClass("selectedContainer");
+  $(containerLine).css("background-color","lightcyan");
+  $(containerLine).addClass("selectedContainer");
   $(".arrow").css({"color":"grey","cursor":"auto"});
-  if ( $(containerID).hasClass("unraid") ) {
+  if ( $(containerLine).hasClass("unraid") ) {
     enableArrow("right");
     disableArrow("left");
     disableArrow("up");
@@ -186,6 +186,7 @@ $(function(){
   }
   initialize();
 });
+
 
 </script>
 <div id='upgradeAvailable' style='display:none'><center> <font color='red'>An update to CA Docker Autostart Manager is Available. Click <a href='/Plugins'>HERE</a> to install the update</center></font></div>

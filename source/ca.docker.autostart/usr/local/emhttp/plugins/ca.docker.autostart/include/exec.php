@@ -76,7 +76,7 @@ function populate($selectedContainer = false) {
       continue;
     }
     $selected = ($container == $selectedContainer) ? "selectedContainer" : ""; 
-    $available .= "<tr id=$container class='container unraid $selected' onclick='selectContainer(this.id);'>";
+    $available .= "<tr id=$container class='container unraid $selected' onclick='selectContainer(this);'>";
     $available .= "<td width=60px><img src=".$info[$container]['icon']." width=48px; height=48px></td>";
     $available .= "<td><strong>$container</strong></td>";
     $autostart = $info[$container]['autostart'] ? "checked" : "";
@@ -103,7 +103,7 @@ function populate($selectedContainer = false) {
       continue;
     }
     $selected = ($containerName == $selectedContainer) ? "selectedContainer" : "";
-    $plgManage .= "<tr id=$containerName class='container managed $selected' onclick=selectContainer(this.id);>";
+    $plgManage .= "<tr id=$containerName class='container managed $selected' onclick='selectContainer(this);'>";
     $plgManage .= "<td width=60px><img src=".$info[$containerName]['icon']." width=48px; height=48px></td>";
     $plgManage .= "<td><strong>$containerName</strong></td>";
     $plgManage .= "<td><strong>IP</strong><input id='".$containerName."IP' type='text' style='width:80px;' value='$containerIP' onchange=changeDelay('$containerName');>";
